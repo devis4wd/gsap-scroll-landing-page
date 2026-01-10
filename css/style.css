@@ -1,1 +1,484 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
+:root {
+  --header-height: 100px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+  Note:
+  Avoid using `scroll-behavior: smooth` when you animate scrolling with GSAP
+  (ScrollSmoother / ScrollTo). Two smooth systems can conflict.
+*/
+body {
+  /* Ensures cursor blend mode works even on sections without explicit backgrounds */
+  background-color: #fff;
+
+  /* Hide native cursor because we render a custom cursor */
+  cursor: none;
+}
+
+/* Custom cursor (pure CSS + vanilla JS). Not related to GSAP. */
+#cursor {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  width: 0.5rem;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+
+  /* Inverts against background for readability */
+  mix-blend-mode: difference;
+
+  z-index: 100;
+  pointer-events: none;
+}
+
+#cursor-ring {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  width: 1.5rem;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ffffff72;
+
+  z-index: 100;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+/* Typography */
+h1 {
+  width: 100%;
+  font-size: clamp(5rem, 10vw, 9rem);
+  font-family: "Anton", sans-serif;
+  margin-bottom: 2rem;
+  line-height: 120%;
+}
+
+h2,
+span {
+  font-size: clamp(3rem, 5vw, 7rem);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+p {
+  font-size: clamp(1rem, 3vw, 2rem);
+  line-height: 130%;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  position: relative;
+  color: inherit;
+}
+
+/* Simple underline animation */
+a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  bottom: -3px;
+  height: 1px;
+  background-color: #fff;
+  transition: transform 0.2s ease-in;
+  transform-origin: 0 0;
+  opacity: 0.5;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+}
+
+figure {
+  overflow: hidden;
+}
+
+img {
+  display: inline-block;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+/* Layout helpers */
+.flex-layout {
+  display: flex;
+  align-items: center;
+}
+
+.flex-layout-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-layout {
+  display: grid;
+}
+
+/* Header stays fixed; must remain outside ScrollSmoother wrappers */
+header {
+  position: fixed;
+  width: 100%;
+  background-color: #000;
+  z-index: 99;
+}
+
+.header-content {
+  height: var(--header-height);
+  justify-content: space-between;
+}
+
+.central-col-width {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.header-content figure {
+  height: 60px;
+}
+
+.site-nav {
+  top: 0;
+  justify-content: end;
+  height: var(--header-height);
+  background-color: #000;
+  color: #fff;
+}
+
+.site-nav a {
+  font-weight: bold;
+  margin-left: 14px;
+}
+
+/* --- MOBILE NAV --- */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  height: var(--header-height);
+  width: 56px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-toggle .material-symbols-outlined {
+  font-size: 32px;
+}
+
+/* Overlay behind the drawer */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 98;
+}
+
+main {
+  padding-top: var(--header-height);
+}
+
+section {
+  min-height: 700px;
+}
+
+#hero {
+  height: calc(100vh - var(--header-height));
+  background-color: #000;
+  color: #fff;
+  padding: clamp(1.5rem, 6vw, 5rem);
+}
+
+#readmore {
+  position: relative;
+  color: #000;
+  height: 1300px;
+  padding-bottom: 3rem;
+}
+
+#readmore figure {
+  position: absolute;
+  top: -20%;
+  right: 10%;
+  width: clamp(250px, 33vw, 800px);
+  height: auto;
+  z-index: 2;
+}
+
+#readmore a::after {
+  background-color: #000;
+}
+
+.read-more-content {
+  text-align: left;
+  padding-top: 10rem;
+}
+
+.read-more-content p {
+  max-width: 60%;
+  margin-bottom: 1rem;
+}
+
+#gallery {
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: clamp(18px, 2.2vw, 40px);
+  gap: clamp(16px, 4vw, 50px);
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+}
+
+#gallery-figure-1 {
+  grid-column: 1 / span 5;
+  grid-row: 1 / span 6;
+}
+
+#gallery-figure-2 {
+  grid-column: 1 / span 5;
+  grid-row: 7 / span 4;
+}
+
+#gallery-figure-3 {
+  grid-column: 6 / span 5;
+  grid-row: 3 / span 6;
+}
+
+.quote-words {
+  flex-wrap: wrap;
+  padding: 5rem 0;
+  gap: 1rem;
+}
+
+#quote span {
+  font-size: clamp(3rem, 5vw, 7rem);
+}
+
+#descent {
+  position: relative;
+  overflow: hidden;
+  height: clamp(520px, 85vh, 900px);
+}
+
+#descent h2 {
+  font-family: "Anton", sans-serif;
+  width: 95%;
+  text-align: center;
+  margin: 0 auto;
+  text-transform: uppercase;
+  z-index: 2;
+  color: white;
+  font-size: clamp(4rem, 18vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+}
+
+#descent img {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+}
+
+#contacts {
+  background-color: #000;
+  color: #fff;
+}
+
+.contacts-content p {
+  max-width: 60%;
+  margin-bottom: 1.3rem;
+}
+
+.contacts-content a::after {
+  background-color: #fff;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: start;
+}
+
+footer p {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  padding: 1rem 0;
+}
+
+/* Modal: fixed, so keep it outside the smoother wrapper */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  border-radius: 20px;
+  color: #000;
+  background-color: #ffffffeb;
+  border: 2px solid rgba(0, 0, 0, 0.723);
+  z-index: 99;
+  visibility: hidden;
+}
+
+.modal p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.modal button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  align-self: end;
+}
+
+.modal button:hover {
+  background-color: #fff;
+  color: #000;
+  outline: 2px solid #000;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  /* Drawer nav (off-canvas) */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(60vw, 340px);
+    background: #000;
+    color: #fff;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: calc(var(--header-height) + 1rem) 1.5rem 1.5rem;
+    gap: 1rem;
+
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 99;
+  }
+
+  .site-nav a {
+    margin-left: 0;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Open state */
+  body.nav-open .site-nav {
+    transform: translateX(0);
+  }
+
+  body.nav-open .nav-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #readmore {
+    min-height: clamp(600px, 110vh, 1100px);
+  }
+
+  #readmore figure {
+    inset: 0;
+    top: -10%;
+    width: min(75vw, 450px);
+    aspect-ratio: 1/1.5;
+    margin: 0 auto;
+  }
+
+  .read-more-content {
+    padding-top: 27rem;
+    margin-top: clamp(15rem, 22vh, 30rem);
+  }
+
+  .read-more-content p {
+    max-width: 100%;
+  }
+
+  /* Gallery: simpler single-column layout */
+  #gallery {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: clamp(3rem, 4vw, 28px);
+  }
+
+  #gallery-figure-1,
+  #gallery-figure-2,
+  #gallery-figure-3 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  #quote span {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+  }
+
+  #descent h2 {
+    font-size: clamp(3.2rem, 25vw, 10rem);
+  }
+}
+
+@media (max-width: 480px) {
+  p {
+    line-height: 1.45;
+  }
+
+  #hero {
+    padding: 1.5rem;
+  }
+
+  .read-more-content {
+    padding-top: 5rem;
+  }
+
+  #descent {
+    height: 70vh;
+  }
+
+  #descent h2 {
+    width: 100%;
+    font-size: clamp(5rem, 20vw, 10rem);
+  }
+
+  .contacts-content p {
+    max-width: 90%;
+  }
+}
+
+/* Touch devices: no hover, so custom cursor is pointless (and can be distracting) */
+@media (hover: none) {
+  #cursor,
+  #cursor-ring {
+    display: none;
+  }
+
+  body {
+    cursor: auto;
+  }
+}
 
