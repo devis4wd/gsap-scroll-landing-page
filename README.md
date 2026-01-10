@@ -32,3 +32,13 @@ It also includes a **custom cursor** (Vanilla JS) and a **mobile off-canvas navi
 1. Clone the repository:
    ```bash
    git clone https://github.com/devis4wd/gsap-scroll-landing-page.git
+
+## License
+The source code of this project is released under the GNU GPL v2.0 license.
+
+All images and visual assets used in this demo are either:
+- sourced from public-domain or Creative Commons repositories, or
+- used here for demonstration and educational purposes only.
+
+If you are the author or rights holder of any asset and believe it is being used improperly,
+please contact me and I will promptly remove or replace it.
