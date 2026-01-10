@@ -1,35 +1,34 @@
-# gsap-scroll-landing-page
-Animated landing page built with HTML/CSS/JavaScript and GSAP, focused on smooth motion and parallax effects, responsiveness and performance
+# GSAP Scroll Landing Page
 
-
-# GSAP Animated Landing Page
-
-A lightweight animated landing page built with **HTML, CSS, JavaScript** and **GSAP**.
-The goal of this project is to showcase clean frontend structure, smooth motion design and responsive layout.
+Animated landing page built with **HTML / CSS / JavaScript** and **GSAP**, focused on smooth scrolling, parallax effects, responsiveness, and performance-aware implementation.
 
 ## Live Demo
-- Demo: https://devis4wd.github.io/gsap-scroll-landing-page/
+- https://devis4wd.github.io/gsap-scroll-landing-page/
 
-## Features
-- GSAP-based animations (intro / hover / scroll / parallax, depending on implementation)
-- delayed custom cursor (Vanilla JS)
-- mix-blend-mode (CSS) for cool and classy effect
-- Responsive layout (mobile-first)
-- Semantic HTML structure
-- Performance-minded asset usage
+## Overview
+This project is a lightweight front-end demo showcasing how to combine **GSAP ScrollSmoother + ScrollTrigger** to create smooth scrolling and scroll-driven motion, while keeping the codebase clean and understandable.  
+It also includes a **custom cursor** (Vanilla JS) and a **mobile off-canvas navigation drawer** with accessible toggling.
+
+## Key Features
+- **Smooth scrolling** using GSAP ScrollSmoother
+- **Parallax effects** via `data-speed` / `data-lag` attributes and GSAP effects
+- **Scroll-driven animation** with ScrollTrigger (`scrub`-based)
+- **Custom delayed cursor** (Vanilla JS) with `mix-blend-mode: difference`
+- **Responsive layout** with a mobile drawer navigation (burger + overlay + ESC close)
+- **Semantic HTML** and modular CSS layout helpers
+- **Performance-aware approach** (lightweight structure, minimal dependencies)
 
 ## Tech Stack
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
-- GSAP
+- GSAP (ScrollSmoother + ScrollTrigger)
 
-## What this project demonstrates
-- Animation orchestration with GSAP
-- Component-like structure with reusable CSS/JS patterns
-- Attention to UX details (timing, easing, interaction feedback)
+## Notes / Implementation Details
+- Elements with `position: fixed` (header, modal, custom cursor) are kept **outside** the ScrollSmoother wrappers to avoid transform-related issues.
+- Native anchor navigation (`href="#section"`) is replaced with **GSAP scrolling** via `data-target` attributes for more reliable behavior with simulated scroll.
 
-## Run locally
-1. Clone the repository  
-2. Open `index.html` (or use VS Code Live Server)
-
+## Run Locally
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/devis4wd/gsap-scroll-landing-page.git
