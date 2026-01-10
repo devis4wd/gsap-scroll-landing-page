@@ -11,7 +11,9 @@ The goal of this project is to showcase clean frontend structure, smooth motion 
 - Demo: https://devis4wd.github.io/gsap-scroll-landing-page/
 
 ## Features
-- GSAP-based animations (intro / hover / scroll, depending on implementation)
+- GSAP-based animations (intro / hover / scroll / parallax, depending on implementation)
+- delayed custom cursor (Vanilla JS)
+- mix-blend-mode (CSS) for cool and classy effect
 - Responsive layout (mobile-first)
 - Semantic HTML structure
 - Performance-minded asset usage
