@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Icon font for the burger menu icon -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta name="author" content="Devis Vallotto">
+  <meta name="copyright" content="Copyright 2026 Devis Vallotto - All Rights Reserved">
+  <meta name="description"
+    content="Type a 160-character description of what this page is about and what people will find here">
+  <title>GSAP - ScrollSmoother & Parallax</title>
+</head>
+
+<body>
+  <!-- Custom cursor (fixed element). Built with plain JS + CSS (not GSAP). -->
+  <div id="cursor"></div>
+  <!-- Outer ring that follows the cursor with slight delay (inertia feel). -->
+  <div id="cursor-ring"></div>
+
+  <!-- 
+    Important: elements with position: fixed/sticky should stay OUTSIDE #smooth-wrapper.
+    ScrollSmoother moves #smooth-content via transforms; fixed/sticky inside may break.
+  -->
+  <header>
+    <div class="header-content flex-layout central-col-width">
+      <figure><img src="img/deep-ocean-diver-logo.png" alt="main logo"></figure>
+
+      <nav class="site-nav flex-layout ">
+        <!-- 
+          With ScrollSmoother, native anchor jumps can be unreliable because content scroll is simulated.
+          Instead of href="#section", we use data-target and scroll via GSAP (see script.js).
+        -->
+        <a id="nav-link0" data-target="hero">hero</a>
+        <a id="nav-link1" data-target="readmore">read more</a>
+        <a id="nav-link2" data-target="gallery">gallery</a>
+        <a id="nav-link3" data-target="quote">quote</a>
+        <a id="nav-link4" data-target="descent">descent</a>
+        <a id="nav-link5" data-target="contacts">contacts</a>
+      </nav>
+
+      <!-- Mobile burger toggle (drawer menu). State controlled via body.nav-open -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+
+      <!-- Overlay behind the drawer (click to close) -->
+      <div class="nav-overlay"></div>
+    </div>
+  </header>
+
+  <!-- 
+    ScrollSmoother requirement:
+    wrap ALL scroll-animated content inside:
+    #smooth-wrapper > #smooth-content
+  -->
+  <div id="smooth-wrapper">
+    <!-- 
+      #smooth-content is translated by GSAP to simulate scrolling.
+      This is why fixed/sticky elements should remain outside this wrapper.
+    -->
+    <div id="smooth-content">
+      <main>
+        <section id="hero" class="flex-layout">
+          <div class="hero-content central-col-width">
+            <h1>Knights of the <br>Deep</h1>
+            <p>Beneath the waves, <br> where light fades,<br> iron helmets replaced armor.</p>
+          </div>
+        </section>
+
+        <section id="readmore" class="flex-layout">
+          <figure>
+            <!-- data-speed enables easy parallax via ScrollSmoother.effects -->
+            <img data-speed="1.2" src="img/hero-img.jpg" alt="Photo of a diver preparing to descend">
+          </figure>
+
+          <div data-speed="0.75" class="read-more-content central-col-width">
+            <p>Lorem ipsum dolor sit amet, aquat in consectetur adipiscing elit. Proin vel scelerisque
+              libero. Morbi ligula quam, congue sit amet . </p>
+            <a id="read-more-link" href="#">read more</a>
+          </div>
+        </section>
+
+        <section id="gallery" class="grid-layout central-col-width">
+          <!-- data-lag adds a delayed "catch up" feel when entering the viewport -->
+          <figure data-lag="0.1" id="gallery-figure-1">
+            <img src="img/gallery-img-1.jpg" alt="Photo of a diver armour">
+          </figure>
+          <figure data-lag="0.3" id="gallery-figure-2">
+            <img src="img/gallery-img-2.jpg" alt="Photo of diver starting a lonely immersion ">
+          </figure>
+          <!-- Tip: try data-lag on <img> vs <figure> to see how overflow/containers change the effect -->
+          <figure data-lag="0.5" id="gallery-figure-3">
+            <img src="img/gallery-img-3.jpg" alt="Photo of diver getting ready to dive">
+          </figure>
+        </section>
+
+        <section id="quote" class=" flex-layout central-col-width">
+          <div class="flex-layout quote-words">
+            <!-- Split text into spans so each word can have its own speed (parallax-like drift) -->
+            <span data-speed="0.8">"Forged </span>
+            <span data-speed="0.9">by </span>
+            <span data-speed="1">the </span>
+            <span data-speed="1.1">deep's </span>
+            <span data-speed="1.2">pressure"</span>
+          </div>
+        </section>
+
+        <section id="descent" class="flex-layout">
+          <!-- 
+            For a strong parallax background:
+            - image is absolute
+            - image is taller than container (height: 200%)
+            - optional data-speed > 1 for extra parallax
+          -->
+          <img data-speed="1.15" src="img/descent-img.jpg" alt="Descent hero img">
+          <h2>Descent</h2>
+        </section>
+
+        <section id="contacts" class="flex-layout">
+          <div class="contacts-content central-col-width">
+            <p data-speed="0.8">Lorem ipsum dolor sit amet, elit consectetur adipiscing.
+              Proin vel scelerisque libero.</p>
+            <a href="#" data-speed="1.2">info@nekoded.com</a>
+          </div>
+        </section>
+
+        <footer class="flex-layout">
+          <p class="central-col-width">Copyright 2026</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- 
+    Fixed modal must also stay outside #smooth-wrapper.
+    We'll pause/resume ScrollSmoother when opening/closing (script.js).
+  -->
+  <div class="modal flex-layout-column">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit reprehenderit maxime nobis nam, vero cum
+      molestias impedit itaque aperiam reiciendis quasi.</p>
+    <button id="modal-close-btn">Close</button>
+  </div>
+
+  <!-- GSAP core -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+  <!-- ScrollSmoother requires ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollSmoother.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
 
