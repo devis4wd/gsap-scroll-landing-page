@@ -30,7 +30,7 @@ const smoother = ScrollSmoother.create({
   onUpdate: (self) => console.log(self.getVelocity()),
 });
 
-// ----- “Anchors” replacement (menu navigation) -----
+// ----- “Anchors” replacement (menu navigation) due to GSAP behaviour-----
 // We scroll the smoother instance instead of relying on default href behavior.
 const headerHeight = document.querySelector("header").offsetHeight;
 const navLinks = document.querySelectorAll("nav a[data-target]");
