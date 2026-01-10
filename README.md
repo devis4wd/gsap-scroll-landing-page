@@ -1,5 +1,5 @@
 # gsap-scroll-landing-page
-Animated landing page built with HTML/CSS/JavaScript and GSAP, focused on smooth motion, responsiveness and performance
+Animated landing page built with HTML/CSS/JavaScript and GSAP, focused on smooth motion and parallax effects, responsiveness and performance
 
 
 # GSAP Animated Landing Page
